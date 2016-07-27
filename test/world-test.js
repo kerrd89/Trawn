@@ -16,6 +16,8 @@ describe('World', function() {
     assert.isFunction(World);
   });
 
+  
+
 
 //   it('should have the canvas size from html', function() {
 //     var canvas = document.getElementById('trawn');
