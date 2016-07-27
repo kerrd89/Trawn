@@ -11,9 +11,14 @@ describe('Prawn', function() {
             assert.isFunction(Prawn);
         });
 
-        it('has default x, y, and direction values', function() {
+        it('has default x, y, width, height, direction, world, and pastLocation values', function() {
             assert.equal(prawn.x, 5);
             assert.equal(prawn.y, 5);
+            assert.equal(prawn.width, 10);
+            assert.equal(prawn.height, 10);
+            assert.equal(prawn.dir, 'left')
+            assert.deepEqual(prawn.world, {worldWidth: 100, worldHeight: 100});
+            assert.deepEqual(prawn.pastLocations, []);
         });
     });
 
