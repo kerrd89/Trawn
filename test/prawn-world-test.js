@@ -30,3 +30,46 @@ describe('World in relation to Prawns', function() {
         assert.include(world.prawns, prawn);
     });
 })
+
+describe('Prawns scootin their little prawn behinds around', function() {
+
+  it('should move up when upArrow is called', function() {
+    var world = new World(200, 200);
+    var prawn = new Prawn({});
+    prawn.y = 10;
+    prawn.dir = 'right';
+    world.addPrawn(prawn);
+    world.upArrow();
+    assert.equal(prawn.y, 9)
+  });
+
+  it('should move down when downArrow is called', function() {
+    var world = new World(200, 200);
+    var prawn = new Prawn({});
+    prawn.y = 10;
+    prawn.dir = 'right';
+    world.addPrawn(prawn);
+    world.downArrow();
+    assert.equal(prawn.y, 11)
+  });
+
+  it('should move right when rightArrow is called', function() {
+    var world = new World(200, 200);
+    var prawn = new Prawn({});
+    prawn.x = 10;
+    prawn.dir = 'up';
+    world.addPrawn(prawn);
+    world.rightArrow();
+    assert.equal(prawn.x, 11)
+  });
+
+  it('should move left when leftArrow is called', function() {
+    var world = new World(200, 200);
+    var prawn = new Prawn({});
+    prawn.x = 10;
+    prawn.dir = 'up'
+    world.addPrawn(prawn);
+    world.leftArrow();
+    assert.equal(prawn.x, 9)
+  });
+});
