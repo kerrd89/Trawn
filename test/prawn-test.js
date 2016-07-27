@@ -67,5 +67,60 @@ describe('Prawn', function() {
             assert.equal(prawn.x, xValue - 1)
           });
         });
+
+        describe('changeDirectionRight', function() {
+          it('should moveRight if direction is up or down otherwise it should continue in same direction', function() {
+            var prawn = new Prawn({});
+            prawn.dir = 'up';
+            prawn.changeDirectionRight();
+
+            prawn.dir = 'left';
+            prawn.changeDirectionRight();
+            assert.equal(prawn.dir, 'left')
+          })
+        })
+
+        describe('changeDirectionLeft', function() {
+          it('should moveLeft if direction is up or down, otherwise it should continue in same direction', function() {
+            var prawn = new Prawn({});
+            prawn.dir = 'down';
+            prawn.changeDirectionLeft();
+            assert.equal(prawn.dir, 'left');
+
+            prawn.dir = 'right';
+            prawn.changeDirectionLeft();
+            assert.equal(prawn.dir, 'right');
+          });
+        });
+
+      describe('changeDirectionUp', function() {
+        it('should moveUp if direction is left or right, else continue in same direction', function() {
+            var prawn = new Prawn({});
+            prawn.dir = 'left';
+            prawn.changeDirectionUp();
+            assert.equal(prawn.dir, 'up');
+
+            prawn.dir = 'down';
+            prawn.changeDirectionUp();
+            assert.equal(prawn.dir, 'down');
+        });
+      });
+
+      describe('changeDirectionDown', function() {
+        it('should moveDown if direction is left or right, else continue in same direction', function() {
+            var prawn = new Prawn({});
+            prawn.dir = 'right';
+            prawn.changeDirectionDown();
+            assert.equal(prawn.dir, 'down');
+
+            prawn.dir = 'up';
+            prawn.changeDirectionDown();
+            assert.equal(prawn.dir, 'up');
+        });
+      });
+
+
+
+
     });
 });
