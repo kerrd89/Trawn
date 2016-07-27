@@ -44,13 +44,11 @@
 /* 0 */
 /***/ function(module, exports) {
 
-	'use strict';
+	const canvas = document.getElementById('trawn');
+	// const ctx = canvas.getContext('2d');
 
-	var sayHello = function sayHello() {
-	  return console.log('Hello');
-	};
 
-	sayHello();
+	module.exports = canvas;
 
 /***/ }
 /******/ ]);
