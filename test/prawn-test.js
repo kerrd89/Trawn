@@ -124,8 +124,35 @@ describe('Prawn', function() {
             assert.equal(prawn.dir, 'up');
         });
       });
-
-
-
     });
+
+    describe('update list of pastLocation property with poop', function() {
+      it('should update pastLocations array with its current location', function() {
+        var prawn = new Prawn({});
+        prawn.x = 15;
+        prawn.y = 15;
+        prawn.poop();
+        assert.deepEqual(prawn.pastLocations, [{x: 15, y: 15}])
+      })
+
+      it('should update add to pastLocations array each time the prawn moves', function() {
+        var prawn = new Prawn({});
+        prawn.x = 15;
+        prawn.y = 15;
+        prawn.moveLeft();
+        prawn.moveUp();
+        assert.equal(prawn.pastLocations.length, 2)
+      })
+
+      it('should update pastLocations array each time the prawn moves with the correct x, y coordinates', function() {
+        var prawn = new Prawn({});
+        prawn.x = 15;
+        prawn.y = 15;
+        prawn.moveRight();
+        prawn.moveUp();
+        prawn.move();
+        assert.deepEqual(prawn.pastLocations, [{x: 15, y: 15}, {x: 16, y: 15}, {x: 16, y: 14}])
+      })
+    })
+
 });
