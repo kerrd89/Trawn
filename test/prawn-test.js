@@ -125,16 +125,7 @@ describe('Prawn', function() {
         });
       });
 
-      // describe('recordLocation', function() {
-      //   it('should push prawnHeadLocation to the pastLocations array', function() {
-      //   var prawn = new Prawn({});
-      //   prawn.x = 10;
-      //   prawn.y = 10;
-      //   prawn.recordLocation();
-      //   assert.deepEqual(pastLocations, {x: 10, y: 10});
-      //   })
-      //
-      // })
+
 
     });
 });

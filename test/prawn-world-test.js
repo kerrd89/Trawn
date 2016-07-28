@@ -73,3 +73,13 @@ describe('Prawns scootin their little prawn behinds around', function() {
     assert.equal(prawn.x, 9)
   });
 });
+
+describe('collision testing', function() {
+  it('world should send alert when prawn hits edges', function() {
+    var world = new World(200, 200);
+    var prawn = new Prawn({});
+    prawn.x = 0;
+    world.checkEdges();
+
+  })
+})
