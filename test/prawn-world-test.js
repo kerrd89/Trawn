@@ -23,7 +23,7 @@ describe('Prawn-world relationship', function() {
 });
 
 describe('World in relation to Prawns', function() {
-    it('should know about the blocks added to the world', function() {
+    it('should recognize prawns added to the world', function() {
         var world = new World(200, 200);
         var prawn = new Prawn({});
         world.addPrawn(prawn);
@@ -36,8 +36,8 @@ describe('Prawns scootin their little prawn behinds around', function() {
   it('should move up when upArrow is called', function() {
     var world = new World(200, 200);
     var prawn = new Prawn({});
-    prawn.y = 10;
     prawn.dir = 'right';
+    prawn.y = 10;
     world.addPrawn(prawn);
     world.upArrow();
     assert.equal(prawn.y, 9)
