@@ -67,9 +67,10 @@ describe('Prawn', function() {
         describe('move', function() {
           it('should change x or y depending on direction', function() {
             var prawn = new Prawn({});
-            var xValue = prawn.x;
+            prawn.x = 10;
+            prawn.dir = 'right';
             prawn.move();
-            assert.equal(prawn.x, xValue - 1)
+            assert.equal(prawn.x, 11)
           });
         });
 
