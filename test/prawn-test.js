@@ -16,7 +16,7 @@ describe('Prawn', function() {
             assert.equal(prawn.y, 5);
             assert.equal(prawn.width, 10);
             assert.equal(prawn.height, 10);
-            assert.equal(prawn.dir, 'left')
+            assert.equal(prawn.dir, 'right')
             assert.deepEqual(prawn.world, {worldWidth: 100, worldHeight: 100});
             assert.deepEqual(prawn.pastLocations, []);
         });
