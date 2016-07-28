@@ -80,6 +80,6 @@ describe('collision testing', function() {
     var prawn = new Prawn({});
     prawn.x = 0;
     world.checkEdges();
-    expect(alert.args[0][0]).to.equal('game over man');
+
   })
 })
