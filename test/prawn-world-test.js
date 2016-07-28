@@ -80,6 +80,18 @@ describe('collision testing', function() {
     var prawn = new Prawn({});
     prawn.x = 0;
     world.checkEdges();
-
   })
 })
+
+describe('recognizing own poop', function() {
+  it('the prawn should not be able to step in its own poop', function() {
+  var world = new World(200, 200);
+     var prawn = new Prawn({});
+     prawn.x = 15;
+     prawn.y = 15;
+     prawn.move();
+     prawn.pastLocations = {x: 16, y: 15};
+     world.checkPoop();
+     assert.deepEqual(prawn.pastLocations, {x: prawn.x, y: prawn.y});
+  });
+});

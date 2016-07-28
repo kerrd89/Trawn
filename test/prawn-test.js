@@ -153,6 +153,8 @@ describe('Prawn', function() {
         prawn.move();
         assert.deepEqual(prawn.pastLocations, [{x: 15, y: 15}, {x: 16, y: 15}, {x: 16, y: 14}])
       })
+
+
     })
 
 });
