@@ -16,7 +16,7 @@ describe('Prawn', function() {
             assert.equal(prawn.y, 5);
             assert.equal(prawn.width, 10);
             assert.equal(prawn.height, 10);
-            assert.equal(prawn.dir, 'right')
+            assert.equal(prawn.dir, 'right');
             assert.deepEqual(prawn.world, {worldWidth: 100, worldHeight: 100});
             assert.deepEqual(prawn.pastLocations, []);
         });
@@ -25,7 +25,7 @@ describe('Prawn', function() {
 
     context('with given attributes', function() {
 
-        var prawn = new Prawn({})
+        var prawn = new Prawn({});
 
         describe('moveRight', function() {
             it('should increment the x position by 1 and set the direction to right', function() {
@@ -70,7 +70,7 @@ describe('Prawn', function() {
             prawn.x = 10;
             prawn.dir = 'right';
             prawn.move();
-            assert.equal(prawn.x, 11)
+            assert.equal(prawn.x, 11);
           });
         });
 
@@ -82,9 +82,9 @@ describe('Prawn', function() {
 
             prawn.dir = 'left';
             prawn.changeDirectionRight();
-            assert.equal(prawn.dir, 'left')
-          })
-        })
+            assert.equal(prawn.dir, 'left');
+          });
+        });
 
         describe('changeDirectionLeft', function() {
           it('should moveLeft if direction is up or down, otherwise it should continue in same direction', function() {
@@ -132,8 +132,8 @@ describe('Prawn', function() {
         prawn.x = 15;
         prawn.y = 15;
         prawn.poop();
-        assert.deepEqual(prawn.pastLocations, [{x: 15, y: 15}])
-      })
+        assert.deepEqual(prawn.pastLocations, [{x: 15, y: 15}]);
+      });
 
       it('should update add to pastLocations array each time the prawn moves', function() {
         var prawn = new Prawn({});
@@ -141,8 +141,8 @@ describe('Prawn', function() {
         prawn.y = 15;
         prawn.moveLeft();
         prawn.moveUp();
-        assert.equal(prawn.pastLocations.length, 2)
-      })
+        assert.equal(prawn.pastLocations.length, 2);
+      });
 
       it('should update pastLocations array each time the prawn moves with the correct x, y coordinates', function() {
         var prawn = new Prawn({});
@@ -151,8 +151,8 @@ describe('Prawn', function() {
         prawn.moveRight();
         prawn.moveUp();
         prawn.move();
-        assert.deepEqual(prawn.pastLocations, [{x: 15, y: 15}, {x: 16, y: 15}, {x: 16, y: 14}])
-      })
-    })
+        assert.deepEqual(prawn.pastLocations, [{x: 15, y: 15}, {x: 16, y: 15}, {x: 16, y: 14}]);
+      });
+    });
 
 });

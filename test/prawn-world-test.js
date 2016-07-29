@@ -11,7 +11,7 @@ describe('Prawn-world relationship', function() {
             world: world
         });
         assert.equal(prawn.world, world);
-    })
+    });
 
     it('prawns created with addPrawn should recognize the world', function() {
         var world = new World(200, 200);
@@ -19,7 +19,7 @@ describe('Prawn-world relationship', function() {
         world.addPrawn(prawn);
         assert.equal(prawn.world, world);
         // assert.include(world.prawns, prawn);
-    })
+    });
 });
 
 describe('World in relation to Prawns', function() {
@@ -29,7 +29,7 @@ describe('World in relation to Prawns', function() {
         world.addPrawn(prawn);
         assert.include(world.prawns, prawn);
     });
-})
+});
 
 describe('Prawns scootin their little prawn behinds around', function() {
 
@@ -40,7 +40,7 @@ describe('Prawns scootin their little prawn behinds around', function() {
     prawn.y = 10;
     world.addPrawn(prawn);
     world.upArrow();
-    assert.equal(prawn.y, 9)
+    assert.equal(prawn.y, 9);
   });
 
   it('should move down when downArrow is called', function() {
@@ -50,7 +50,7 @@ describe('Prawns scootin their little prawn behinds around', function() {
     prawn.dir = 'right';
     world.addPrawn(prawn);
     world.downArrow();
-    assert.equal(prawn.y, 11)
+    assert.equal(prawn.y, 11);
   });
 
   it('should move right when rightArrow is called', function() {
@@ -60,17 +60,17 @@ describe('Prawns scootin their little prawn behinds around', function() {
     prawn.dir = 'up';
     world.addPrawn(prawn);
     world.rightArrow();
-    assert.equal(prawn.x, 11)
+    assert.equal(prawn.x, 11);
   });
 
   it('should move left when leftArrow is called', function() {
     var world = new World(200, 200);
     var prawn = new Prawn({});
     prawn.x = 10;
-    prawn.dir = 'up'
+    prawn.dir = 'up';
     world.addPrawn(prawn);
     world.leftArrow();
-    assert.equal(prawn.x, 9)
+    assert.equal(prawn.x, 9);
   });
 });
 
@@ -80,6 +80,16 @@ describe('collision testing', function() {
     var prawn = new Prawn({});
     prawn.x = 0;
     world.checkEdges();
+  });
 
-  })
-})
+  it('should know when it steps in its own poop', function() {
+    var world = new World(200, 200);
+    var prawn = new Prawn({});
+    prawn.x = 15;
+    prawn.y = 15;
+    prawn.move();
+    prawn.pastLocations = {x: 16, y: 15};
+    world.checkPoop();
+    assert.equal(prawn.pastLocations, {x: prawn.x, y: prawn.y});
+  });
+});
