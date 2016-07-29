@@ -38,9 +38,10 @@ describe('Prawns scootin their little prawn behinds around', function() {
     var prawn = new Prawn({});
     prawn.dir = 'right';
     prawn.y = 10;
+    var yValue = prawn.y;
     world.addPrawn(prawn);
-    world.upArrow();
-    assert.equal(prawn.y, 9);
+    world.upArrow(0);
+    assert.equal(prawn.y, yValue - prawn.speed);
   });
 
   it('should move down when downArrow is called', function() {
@@ -48,29 +49,32 @@ describe('Prawns scootin their little prawn behinds around', function() {
     var prawn = new Prawn({});
     prawn.y = 10;
     prawn.dir = 'right';
+    var yValue = prawn.y;
     world.addPrawn(prawn);
-    world.downArrow();
-    assert.equal(prawn.y, 11);
+    world.downArrow(0);
+    assert.equal(prawn.y, yValue + prawn.speed);
   });
 
   it('should move right when rightArrow is called', function() {
     var world = new World(200, 200);
     var prawn = new Prawn({});
     prawn.x = 10;
+    var xValue = prawn.x;
     prawn.dir = 'up';
     world.addPrawn(prawn);
-    world.rightArrow();
-    assert.equal(prawn.x, 11);
+    world.rightArrow(0);
+    assert.equal(prawn.x, xValue + prawn.speed);
   });
 
   it('should move left when leftArrow is called', function() {
     var world = new World(200, 200);
     var prawn = new Prawn({});
     prawn.x = 10;
+    var xValue = prawn.x;
     prawn.dir = 'up';
     world.addPrawn(prawn);
-    world.leftArrow();
-    assert.equal(prawn.x, 9);
+    world.leftArrow(0);
+    assert.equal(prawn.x, xValue - prawn.speed);
   });
 });
 
