@@ -88,8 +88,8 @@ describe('collision testing', function() {
     prawn.x = 15;
     prawn.y = 15;
     prawn.move();
-    prawn.pastLocations = {x: 16, y: 15};
+    prawn.pastLocations = [{x: 16, y: 15}];
     world.checkPoop();
-    assert.equal(prawn.pastLocations, {x: prawn.x, y: prawn.y});
+    assert.deepEqual(prawn.pastLocations, [{x: prawn.x, y: prawn.y}]);
   });
 });
