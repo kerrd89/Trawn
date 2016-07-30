@@ -89,10 +89,12 @@ describe('collision testing', function() {
   it('should know when it steps in its own poop', function() {
     var world = new World(200, 200);
     var prawn = new Prawn({});
+
     prawn.x = 15;
     prawn.y = 15;
+    world.addPrawn(prawn);
     prawn.move();
-    prawn.pastLocations = [{x: 16, y: 15}];
+    prawn.pastLocations = [{x: 18, y: 15}];
     world.checkPoop();
     assert.deepEqual(prawn.pastLocations, [{x: prawn.x, y: prawn.y}]);
   });
