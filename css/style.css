@@ -1,0 +1,13 @@
+body {
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+    width: 500px;
+}
+
+.scoreboard {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 2;
+  justify-content: space-between;
+  border: 5px solid black;
+}
