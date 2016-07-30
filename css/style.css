@@ -1,13 +1,36 @@
 body {
     box-sizing: border-box;
     font-family: 'Open Sans', sans-serif;
-    width: 500px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+  display: flex;
+}
+
+
+h1 img {
+  height: 100px;
 }
 
 .scoreboard {
+  margin-top: 5%;
+  padding: 10px 20px;
   display: flex;
   flex-direction: row;
   flex-grow: 2;
   justify-content: space-between;
-  border: 5px solid black;
+  background: #ef5351;
+  color: #15155e;
+  font-size: 125%;
+  font-weight: bold;
+  text-align: center;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.game-container {
+  width: 500px;
 }
