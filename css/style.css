@@ -27,6 +27,18 @@ h1 img {
   font-family: 'Orbitron', sans-serif;
 }
 
+.difficulty-adjuster {
+  display: flex;
+  flex-direction: row;
+  background: #ef5351;
+  color: #15155e;
+  font-size: 90%;
+  font-weight: bold;
+  text-align: center;
+  font-family: 'Orbitron', sans-serif;
+  border: none;
+}
+
 .game-container {
   width: 500px;
 }
