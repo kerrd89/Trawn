@@ -86,7 +86,7 @@ describe('collision testing', function() {
     world.checkEdges();
   });
 
-  it('should know when it steps in its own poop', function() {
+  it('should know when it steps in poop', function() {
     var world = new World(200, 200);
     var prawn = new Prawn({});
 

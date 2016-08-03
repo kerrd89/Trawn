@@ -12,7 +12,7 @@ const World = require('../lib/world')
 
 describe('World', function() {
 
-  it('should have width, height, and prawns', function() {
+  it('should have width, height, prawns, and a difficulty variable', function() {
     var world = new World(100, 100);
     assert.equal(world.width, 100, world.height, 100, world.prawns, [])
   });
