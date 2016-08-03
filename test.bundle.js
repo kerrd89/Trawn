@@ -47,7 +47,7 @@
 	__webpack_require__(3);
 	mocha.setup("bdd");
 	__webpack_require__(11)
-	__webpack_require__(56);
+	__webpack_require__(57);
 	if(false) {
 		module.hot.accept();
 		module.hot.dispose(function() {
@@ -63,93 +63,120 @@
 /* 1 */
 /***/ function(module, exports) {
 
-	function Prawn(options) {
-	  this.x = options.x || 5;
-	  this.y = options.y || 5;
-	  this.dir = options.dir || 'left';
-	  this.pastLocations = [];
+	function Prawn(prawnProperties) {
+	  this.x = prawnProperties.x || 5;
+	  this.y = prawnProperties.y || 5;
+	  this.width = prawnProperties.width || 5;
+	  this.height = prawnProperties.height || 5;
+	  this.dir = prawnProperties.dir || 'right';
+	  this.world = prawnProperties.world || { worldWidth: 100, worldHeight: 100 };
+	  this.pastLocations = prawnProperties.pastLocations || [];
+	  this.speed = prawnProperties.speed || 3;
+	  this.color = prawnProperties.color;
+	  this.ID = prawnProperties.ID;
 	};
-
-	var canvas = document.getElementById('trawn');
 
 	Prawn.prototype.move = function () {
 	  var currentDirection = this.dir;
-	  if (currentDirection === 'left') {
-	    this.moveLeft();
-	  };
-	  if (currentDirection === 'right') {
-	    this.moveRight();
-	  };
-	  if (currentDirection === 'up') {
-	    this.moveUp();
-	  };
-	  if (currentDirection === 'down') {
-	    this.moveDown();
-	  };
+	  if (currentDirection === 'left') this.moveLeft();
+	  if (currentDirection === 'right') this.moveRight();
+	  if (currentDirection === 'up') this.moveUp();
+	  if (currentDirection === 'down') this.moveDown();
+	};
+
+	Prawn.prototype.poop = function () {
+	  var topLeftCorner = { x: this.x, y: this.y };
+	  var topRightCorner = this.findTopRightCorner();
+	  var bottomRightCorner = this.findBottomRightCorner();
+	  var bottomLeftCorner = this.findBottomLeftCorner();
+	  this.world.allPrawnLocations.push(topLeftCorner);
+	  this.world.allPrawnLocations.push(topRightCorner);
+	  this.world.allPrawnLocations.push(bottomRightCorner);
+	  this.world.allPrawnLocations.push(bottomLeftCorner);
 	};
 
 	Prawn.prototype.moveRight = function () {
-	  this.x = this.x + 1;
 	  this.dir = 'right';
+	  this.poop();
+	  this.x = this.x + this.speed;
 	};
 
 	Prawn.prototype.moveLeft = function () {
-	  this.x = this.x - 1;
 	  this.dir = 'left';
+	  this.poop();
+	  this.x = this.x - this.speed;
 	};
 
 	Prawn.prototype.moveUp = function () {
-	  this.y = this.y - 1;
 	  this.dir = 'up';
+	  this.poop();
+	  this.y = this.y - this.speed;
 	};
 
 	Prawn.prototype.moveDown = function () {
-	  this.y = this.y + 1;
 	  this.dir = 'down';
+	  this.poop();
+	  this.y = this.y + this.speed;
 	};
 
 	Prawn.prototype.changeDirectionRight = function () {
-	  if (this.dir === 'up' || this.dir === 'down') {
+	  if (this.dir === 'up') {
+	    this.moveDown();
 	    this.moveRight();
-	  } else {
-	    this.move();
 	  };
+	  if (this.dir === 'down') {
+	    this.moveUp();
+	    this.moveRight();
+	  }
 	};
 
 	Prawn.prototype.changeDirectionLeft = function () {
-	  if (this.dir === 'up' || this.dir === 'down') {
+	  if (this.dir === 'up') {
+	    this.moveDown();
 	    this.moveLeft();
-	  } else {
-	    this.move();
+	  };
+	  if (this.dir === 'down') {
+	    this.moveUp();
+	    this.moveLeft();
 	  };
 	};
 
 	Prawn.prototype.changeDirectionUp = function () {
-	  if (this.dir === 'left' || this.dir === 'right') {
+	  if (this.dir === 'left') {
+	    this.moveRight();
 	    this.moveUp();
-	  } else {
-	    this.move();
 	  };
+	  if (this.dir === 'right') {
+	    this.moveLeft();
+	    this.moveUp();
+	  }
 	};
 
 	Prawn.prototype.changeDirectionDown = function () {
-	  if (this.dir === 'left' || this.dir === 'right') {
+	  if (this.dir === 'left') {
+	    this.moveRight();
 	    this.moveDown();
-	  } else {
-	    this.move();
-	  };
+	  }
+	  if (this.dir === 'right') {
+	    this.moveLeft();
+	    this.moveDown();
+	  }
 	};
 
-	Prawn.prototype.recordLocation = function () {
-	  var prawnHeadLocation = { x: this.x, y: this.y };
-	  Prawn.pastLocations.push(prawnHeadLocation);
+	Prawn.prototype.findBottomRightCorner = function () {
+	  var bottomRightCorner = { x: this.x + 4, y: this.y + 4 };
+	  return bottomRightCorner;
 	};
 
-	// Prawn.prototype.checkLocationForPrawnTails = function(){
-	//   var prawnHeadLocation = {x: this.x, y: this.y};
-	//   //check prawnHeadLocation agains t
-	// };
+	Prawn.prototype.findBottomLeftCorner = function () {
+	  var bottomLeftCorner = { x: this.x, y: this.y + 4 };
+	  return bottomLeftCorner;
+	};
 
+	Prawn.prototype.findTopRightCorner = function () {
+	  var topRightCorner = { x: this.x + 4, y: this.y };
+	  return topRightCorner;
+	};
 
 	module.exports = Prawn;
 
@@ -159,10 +186,164 @@
 
 	const Prawn = __webpack_require__(1);
 
-	function World(options) {
-	  this.x = options.x || 500;
-	  this.y = options.y || 500;
+	// const canvas = document.getElementById('trawn');
+	// const context = canvas.getContext('2d');
+
+	function World(width, height, context) {
+	  this.width = width;
+	  this.height = height;
+	  this.prawns = [];
+	  this.allPrawnLocations = [];
+	  this.context = context;
+	  this.score = [0, 0];
+	  this.difficulty = 3;
+	}
+
+	World.prototype.addPrawn = function (prawn) {
+	  prawn.world = this;
+	  this.prawns.push(prawn);
 	};
+
+	World.prototype.checkEdges = function () {
+	  var _self = this;
+	  this.prawns.forEach(function (prawn) {
+	    if (prawn.x <= 0 || prawn.y <= 0) _self.resetGame(prawn);
+	    if (prawn.x >= prawn.world.width - prawn.width) _self.resetGame(prawn);
+	    if (prawn.y >= prawn.world.height - prawn.height) _self.resetGame(prawn);
+	  });
+	};
+
+	World.prototype.checkPoop = function () {
+	  var _self = this;
+	  this.prawns.forEach(function (prawn) {
+
+	    var topLeftCorner = JSON.stringify({ x: prawn.x, y: prawn.y });
+	    var leftEdge2 = JSON.stringify({ x: prawn.x, y: prawn.y + 1 });
+	    var leftEdge3 = JSON.stringify({ x: prawn.x, y: prawn.y + 2 });
+	    var leftEdge4 = JSON.stringify({ x: prawn.x, y: prawn.y + 3 });
+	    var bottomLeftCorner = JSON.stringify({ x: prawn.x, y: prawn.y + 4 });
+	    var bottomEdge2 = JSON.stringify({ x: prawn.x + 1, y: prawn.y + 4 });
+	    var bottomEdge3 = JSON.stringify({ x: prawn.x + 2, y: prawn.y + 4 });
+	    var bottomEdge4 = JSON.stringify({ x: prawn.x + 3, y: prawn.y + 4 });
+	    var bottomRightCorner = JSON.stringify({ x: prawn.x + 4, y: prawn.y + 4 });
+	    var rightEdge2 = JSON.stringify({ x: prawn.x + 4, y: prawn.y + 1 });
+	    var rightEdge3 = JSON.stringify({ x: prawn.x + 4, y: prawn.y + 2 });
+	    var rightEdge4 = JSON.stringify({ x: prawn.x + 4, y: prawn.y + 3 });
+	    var topRightCorner = JSON.stringify({ x: prawn.x + 4, y: prawn.y });
+	    var topEdge2 = JSON.stringify({ x: prawn.x + 1, y: prawn.y });
+	    var topEdge3 = JSON.stringify({ x: prawn.x + 2, y: prawn.y });
+	    var topEdge4 = JSON.stringify({ x: prawn.x + 3, y: prawn.y });
+	    var collisionsBox = [];
+	    if (prawn.dir === 'left') {
+	      if (JSON.stringify(_self.allPrawnLocations).includes(topLeftCorner)) _self.resetGame(prawn);
+	      if (JSON.stringify(_self.allPrawnLocations).includes(leftEdge2)) _self.resetGame(prawn);
+	      if (JSON.stringify(_self.allPrawnLocations).includes(leftEdge3)) _self.resetGame(prawn);
+	      if (JSON.stringify(_self.allPrawnLocations).includes(leftEdge4)) _self.resetGame(prawn);
+	      if (JSON.stringify(_self.allPrawnLocations).includes(bottomLeftCorner)) _self.resetGame(prawn);
+	    }
+	    if (prawn.dir === 'right') {
+	      if (JSON.stringify(_self.allPrawnLocations).includes(bottomRightCorner)) _self.resetGame(prawn);
+	      if (JSON.stringify(_self.allPrawnLocations).includes(rightEdge2)) _self.resetGame(prawn);
+	      if (JSON.stringify(_self.allPrawnLocations).includes(rightEdge3)) _self.resetGame(prawn);
+	      if (JSON.stringify(_self.allPrawnLocations).includes(rightEdge4)) _self.resetGame(prawn);
+	      if (JSON.stringify(_self.allPrawnLocations).includes(topRightCorner)) _self.resetGame(prawn);
+	    }
+	    if (prawn.dir === 'up') {
+	      if (JSON.stringify(_self.allPrawnLocations).includes(topLeftCorner)) _self.resetGame(prawn);
+	      if (JSON.stringify(_self.allPrawnLocations).includes(topEdge2)) _self.resetGame(prawn);
+	      if (JSON.stringify(_self.allPrawnLocations).includes(topEdge3)) _self.resetGame(prawn);
+	      if (JSON.stringify(_self.allPrawnLocations).includes(topEdge4)) _self.resetGame(prawn);
+	      if (JSON.stringify(_self.allPrawnLocations).includes(topRightCorner)) _self.resetGame(prawn);
+	    }
+	    if (prawn.dir === 'down') {
+	      if (JSON.stringify(_self.allPrawnLocations).includes(bottomRightCorner)) _self.resetGame(prawn);
+	      if (JSON.stringify(_self.allPrawnLocations).includes(bottomEdge2)) _self.resetGame(prawn);
+	      if (JSON.stringify(_self.allPrawnLocations).includes(bottomEdge3)) _self.resetGame(prawn);
+	      if (JSON.stringify(_self.allPrawnLocations).includes(bottomEdge4)) _self.resetGame(prawn);
+	      if (JSON.stringify(_self.allPrawnLocations).includes(bottomLeftCorner)) _self.resetGame(prawn);
+	    };
+	  });
+	};
+
+	World.prototype.updateScore = function (prawn) {
+	  var player2score = document.querySelector('.player2-score');
+	  var player1score = document.querySelector('.player1-score');
+	  if (prawn === this.prawns[0]) {
+	    this.score[1] = this.score[1] + 1;
+	    player2score.innerText = 'PRAWN B \n' + this.score[1];
+	  }
+	  if (prawn === this.prawns[1]) {
+	    this.score[0] = this.score[0] + 1;
+	    player1score.innerText = 'PRAWN A \n' + this.score[0];
+	  }
+	};
+
+	World.prototype.upArrow = function (playerNumber) {
+	  this.prawns[playerNumber].changeDirectionUp();
+	};
+
+	World.prototype.downArrow = function (playerNumber) {
+	  this.prawns[playerNumber].changeDirectionDown();
+	};
+
+	World.prototype.rightArrow = function (playerNumber) {
+	  this.prawns[playerNumber].changeDirectionRight();
+	};
+
+	World.prototype.leftArrow = function (playerNumber) {
+	  this.prawns[playerNumber].changeDirectionLeft();
+	};
+
+	World.prototype.resetGame = function (prawn) {
+	  this.updateScore(prawn);
+	  this.context.fillStyle = '#4E78A0';
+	  this.context.clearRect(0, 0, this.width, this.height);
+	  this.prawns = [];
+	  this.allPrawnLocations = [];
+	  this.context.fillStyle = '#4E78A0';
+	  this.context.fillRect(0, 0, this.width, this.height);
+	  this.context.fillStyle = '#15155e';
+	  this.context.fillRect(0, 50, this.width, 200);
+	  this.context.fillStyle = '#FFFFFF';
+	  this.context.textAlign = 'center';
+	  this.context.font = 'bold 2em "Orbitron"';
+	  this.context.fillText('GAME OVER', 250, 150);
+	};
+
+	// World.prototype.brakePrawnA = function () {
+	//     var _self = this;
+	//
+	//     color = this.getRandomColor()
+	//     this.prawns[0].speed = this.prawns[0].speed/2;
+	//     this.prawns[0].color = color;
+	//     window.setTimeout(function()
+	//       {
+	//         _self.prawns[0].color = '#B0171F';
+	//         _self.prawns[0].speed = _self.prawns[0].speed*2 ;
+	//       }, 500);
+	// };
+
+	// World.prototype.getRandomColor = function() {
+	//     var letters = '0123456789ABCDEF';
+	//     var color = '#';
+	//     for (var i = 0; i < 6; i++ ) {
+	//         color += letters[Math.floor(Math.random() * 16)];
+	//     }
+	//     return color;
+	// }
+
+	// World.prototype.brakePrawnB = function () {
+	//     var _self = this;
+	//     color = this.getRandomColor()
+	//     this.prawns[1].speed = this.prawns[1].speed/2;
+	//     this.prawns[1].color = color;
+	//       window.setTimeout(function()
+	//       {
+	//         _self.prawns[1].color = '#F5D3E2';
+	//         _self.prawns[1].speed = _self.prawns[1].speed*2 ;
+	//       }, 500);
+	// };
+
 
 	module.exports = World;
 
@@ -190,8 +371,8 @@
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
-		module.hot.accept("!!/Users/Brett/Desktop/turing/projects/Trawn/node_modules/mocha-loader/node_modules/css-loader/index.js!/Users/Brett/Desktop/turing/projects/Trawn/node_modules/mocha/mocha.css", function() {
-			var newContent = require("!!/Users/Brett/Desktop/turing/projects/Trawn/node_modules/mocha-loader/node_modules/css-loader/index.js!/Users/Brett/Desktop/turing/projects/Trawn/node_modules/mocha/mocha.css");
+		module.hot.accept("!!/Users/davidkerr/Turing/Trawn/node_modules/mocha-loader/node_modules/css-loader/index.js!/Users/davidkerr/Turing/Trawn/node_modules/mocha/mocha.css", function() {
+			var newContent = require("!!/Users/davidkerr/Turing/Trawn/node_modules/mocha-loader/node_modules/css-loader/index.js!/Users/davidkerr/Turing/Trawn/node_modules/mocha/mocha.css");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -458,6 +639,8 @@
 
 	__webpack_require__(55);
 
+	__webpack_require__(56);
+
 /***/ },
 /* 12 */
 /***/ function(module, exports, __webpack_require__) {
@@ -475,10 +658,19 @@
 
 	describe('World', function () {
 
-	  it('should be a function', function () {
-	    var world = new World({});
-	    assert.isFunction(World);
+	  it('should have width, height, prawns, and a difficulty variable', function () {
+	    var world = new World(100, 100);
+	    assert.equal(world.width, 100, world.height, 100, world.prawns, []);
 	  });
+
+	  // describe('addPrawn', function() {
+	  //   var world = new World(100, 100);
+	  //   var prawn = new Prawn({});
+	  //   world.addPrawn(prawn);
+	  //   assert.equal(world.prawns.length, 1);
+	  // it('should')
+	  // })
+
 
 	  //   it('should have the canvas size from html', function() {
 	  //     var canvas = document.getElementById('trawn');
@@ -10406,6 +10598,8 @@
 
 	const Prawn = __webpack_require__(1);
 
+	const World = __webpack_require__(2);
+
 	describe('Prawn', function () {
 	    context('with default attributes', function () {
 	        var prawn = new Prawn({});
@@ -10414,21 +10608,29 @@
 	            assert.isFunction(Prawn);
 	        });
 
-	        it('has default x, y, and direction values', function () {
+	        it('has default x, y, width, height, direction, world, pastLocation values, speed', function () {
 	            assert.equal(prawn.x, 5);
 	            assert.equal(prawn.y, 5);
+	            assert.equal(prawn.width, 5);
+	            assert.equal(prawn.height, 5);
+	            assert.equal(prawn.dir, 'right');
+	            assert.deepEqual(prawn.world, { worldWidth: 100, worldHeight: 100 });
+	            assert.deepEqual(prawn.pastLocations, []);
+	            assert.equal(prawn.speed, 3);
 	        });
 	    });
 
 	    context('with given attributes', function () {
 
 	        var prawn = new Prawn({});
+	        var world = new World(200, 200);
+	        world.addPrawn(prawn);
 
 	        describe('moveRight', function () {
-	            it('should increment the x position by 1 and set the direction to right', function () {
+	            it('should increment the x position by prawn.speed and set the direction to right', function () {
 	                var xValue = prawn.x;
 	                prawn.moveRight();
-	                assert.equal(prawn.x, xValue + 1);
+	                assert.equal(prawn.x, xValue + prawn.speed);
 	                assert.equal(prawn.dir, 'right');
 	            });
 	        });
@@ -10437,7 +10639,7 @@
 	            it('should decrement the x position by 1 and set direction to left', function () {
 	                var xValue = prawn.x;
 	                prawn.moveLeft();
-	                assert.equal(prawn.x, xValue - 1);
+	                assert.equal(prawn.x, xValue - prawn.speed);
 	                assert.equal(prawn.dir, 'left');
 	            });
 	        });
@@ -10446,7 +10648,7 @@
 	            it('should decrement the y position by 1 and set direction to up', function () {
 	                var yValue = prawn.y;
 	                prawn.moveUp();
-	                assert.equal(prawn.y, yValue - 1);
+	                assert.equal(prawn.y, yValue - prawn.speed);
 	                assert.equal(prawn.dir, 'up');
 	            });
 	        });
@@ -10455,7 +10657,7 @@
 	            it('should increment the y position by 1 and set direction to down', function () {
 	                var yValue = prawn.y;
 	                prawn.moveDown();
-	                assert.equal(prawn.y, yValue + 1);
+	                assert.equal(prawn.y, yValue + prawn.speed);
 	                assert.equal(prawn.dir, 'down');
 	            });
 	        });
@@ -10463,18 +10665,23 @@
 	        describe('move', function () {
 	            it('should change x or y depending on direction', function () {
 	                var prawn = new Prawn({});
+	                var world = new World(200, 200);
+	                world.addPrawn(prawn);
+	                prawn.x = 10;
 	                var xValue = prawn.x;
+	                prawn.dir = 'right';
 	                prawn.move();
-	                assert.equal(prawn.x, xValue - 1);
+	                assert.equal(prawn.x, xValue + prawn.speed);
 	            });
 	        });
 
 	        describe('changeDirectionRight', function () {
 	            it('should moveRight if direction is up or down otherwise it should continue in same direction', function () {
 	                var prawn = new Prawn({});
+	                var world = new World(200, 200);
+	                world.addPrawn(prawn);
 	                prawn.dir = 'up';
 	                prawn.changeDirectionRight();
-
 	                prawn.dir = 'left';
 	                prawn.changeDirectionRight();
 	                assert.equal(prawn.dir, 'left');
@@ -10484,6 +10691,8 @@
 	        describe('changeDirectionLeft', function () {
 	            it('should moveLeft if direction is up or down, otherwise it should continue in same direction', function () {
 	                var prawn = new Prawn({});
+	                var world = new World(200, 200);
+	                world.addPrawn(prawn);
 	                prawn.dir = 'down';
 	                prawn.changeDirectionLeft();
 	                assert.equal(prawn.dir, 'left');
@@ -10497,10 +10706,11 @@
 	        describe('changeDirectionUp', function () {
 	            it('should moveUp if direction is left or right, else continue in same direction', function () {
 	                var prawn = new Prawn({});
+	                var world = new World(200, 200);
+	                world.addPrawn(prawn);
 	                prawn.dir = 'left';
 	                prawn.changeDirectionUp();
 	                assert.equal(prawn.dir, 'up');
-
 	                prawn.dir = 'down';
 	                prawn.changeDirectionUp();
 	                assert.equal(prawn.dir, 'down');
@@ -10510,30 +10720,151 @@
 	        describe('changeDirectionDown', function () {
 	            it('should moveDown if direction is left or right, else continue in same direction', function () {
 	                var prawn = new Prawn({});
+	                var world = new World(200, 200);
+	                world.addPrawn(prawn);
 	                prawn.dir = 'right';
 	                prawn.changeDirectionDown();
 	                assert.equal(prawn.dir, 'down');
-
 	                prawn.dir = 'up';
 	                prawn.changeDirectionDown();
 	                assert.equal(prawn.dir, 'up');
 	            });
 	        });
+	    });
 
-	        describe('recordLocation', function () {
-	            it('should push prawnHeadLocation to the pastLocations array', function () {
-	                var prawn = new Prawn({});
-	                prawn.x = 10;
-	                prawn.y = 10;
-	                prawn.recordLocation();
-	                assert.deepEqual(pastLocations, { x: 10, y: 10 });
-	            });
-	        });
+	    // describe('update list of pastLocation property with poop', function() {
+	    //   // it('should update pastLocations array with its current location', function() {
+	    //   //   var prawn = new Prawn({});
+	    //   //   var world = new World(200, 200);
+	    //   //   world.addPrawn(prawn);
+	    //   //   prawn.x = 15;
+	    //   //   prawn.y = 15;
+	    //   //   prawn.width = 10;
+	    //   //   prawn.height = 10;
+	    //   //   prawn.poop();
+	    //   //   assert.deepEqual(world.allPrawnLocations, [{x: 15, y: 15}, {x: 25, y: 15}, {x: 25, y: 25}, {x: 15, y: 25}]);
+	    //   // });
+
+	    it('should update add to pastLocations array each time the prawn moves', function () {
+	        var prawn = new Prawn({});
+	        var world = new World(200, 200);
+	        world.addPrawn(prawn);
+	        prawn.x = 15;
+	        prawn.y = 15;
+	        prawn.moveLeft();
+	        prawn.moveUp();
+	        assert.equal(world.allPrawnLocations.length, 8);
 	    });
 	});
 
 /***/ },
 /* 56 */
+/***/ function(module, exports, __webpack_require__) {
+
+	const assert = __webpack_require__(13).assert;
+
+	const World = __webpack_require__(2);
+
+	const Prawn = __webpack_require__(1);
+
+	describe('Prawn-world relationship', function () {
+	  it('prawns can recognize the world', function () {
+	    var world = new World(200, 200);
+	    var prawn = new Prawn({
+	      world: world
+	    });
+	    assert.equal(prawn.world, world);
+	  });
+
+	  it('prawns created with addPrawn should recognize the world', function () {
+	    var world = new World(200, 200);
+	    var prawn = new Prawn({});
+	    world.addPrawn(prawn);
+	    assert.equal(prawn.world, world);
+	    // assert.include(world.prawns, prawn);
+	  });
+	});
+
+	describe('World in relation to Prawns', function () {
+	  it('should recognize prawns added to the world', function () {
+	    var world = new World(200, 200);
+	    var prawn = new Prawn({});
+	    world.addPrawn(prawn);
+	    assert.include(world.prawns, prawn);
+	  });
+	});
+
+	describe('Prawns scootin their little prawn behinds around', function () {
+
+	  it('should move up when upArrow is called', function () {
+	    var world = new World(200, 200);
+	    var prawn = new Prawn({});
+	    prawn.dir = 'right';
+	    prawn.y = 10;
+	    var yValue = prawn.y;
+	    world.addPrawn(prawn);
+	    world.upArrow(0);
+	    assert.equal(prawn.y, yValue - prawn.speed);
+	  });
+
+	  it('should move down when downArrow is called', function () {
+	    var world = new World(200, 200);
+	    var prawn = new Prawn({});
+	    prawn.y = 10;
+	    prawn.dir = 'right';
+	    var yValue = prawn.y;
+	    world.addPrawn(prawn);
+	    world.downArrow(0);
+	    assert.equal(prawn.y, yValue + prawn.speed);
+	  });
+
+	  it('should move right when rightArrow is called', function () {
+	    var world = new World(200, 200);
+	    var prawn = new Prawn({});
+	    prawn.x = 10;
+	    var xValue = prawn.x;
+	    prawn.dir = 'up';
+	    world.addPrawn(prawn);
+	    world.rightArrow(0);
+	    assert.equal(prawn.x, xValue + prawn.speed);
+	  });
+
+	  it('should move left when leftArrow is called', function () {
+	    var world = new World(200, 200);
+	    var prawn = new Prawn({});
+	    prawn.x = 10;
+	    var xValue = prawn.x;
+	    prawn.dir = 'up';
+	    world.addPrawn(prawn);
+	    world.leftArrow(0);
+	    assert.equal(prawn.x, xValue - prawn.speed);
+	  });
+	});
+
+	describe('collision testing', function () {
+	  it('world should send alert when prawn hits edges', function () {
+	    var world = new World(200, 200);
+	    var prawn = new Prawn({});
+	    prawn.x = 0;
+	    world.checkEdges();
+	  });
+
+	  it('should know when it steps in poop', function () {
+	    var world = new World(200, 200);
+	    var prawn = new Prawn({});
+
+	    prawn.x = 15;
+	    prawn.y = 15;
+	    world.addPrawn(prawn);
+	    prawn.move();
+	    world.allPrawnLocations = [{ x: 18, y: 15 }];
+	    world.checkPoop();
+	    assert.deepEqual(world.allPrawnLocations, [{ x: prawn.x, y: prawn.y }]);
+	  });
+	});
+
+/***/ },
+/* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {process.nextTick(function() {
@@ -10544,10 +10875,10 @@
 			mocha.run();
 	});
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(57)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(58)))
 
 /***/ },
-/* 57 */
+/* 58 */
 /***/ function(module, exports) {
 
 	// shim for using process in browser
