@@ -26,7 +26,6 @@ describe('Prawn', function() {
         });
     });
 
-
     context('with given attributes', function() {
 
         var prawn = new Prawn({});
@@ -35,7 +34,7 @@ describe('Prawn', function() {
 
         describe('moveRight', function() {
             it('should increment the x position by prawn.speed and set the direction to right', function() {
-                var xValue = prawn.x
+                var xValue = prawn.x;
                 prawn.moveRight();
                 assert.equal(prawn.x,  xValue + prawn.speed);
                 assert.equal(prawn.dir, 'right');
@@ -75,7 +74,7 @@ describe('Prawn', function() {
             var world = new World(200, 200);
             world.addPrawn(prawn);
             prawn.x = 10;
-            var xValue = prawn.x
+            var xValue = prawn.x;
             prawn.dir = 'right';
             prawn.move();
             assert.equal(prawn.x, xValue + prawn.speed);
@@ -139,18 +138,18 @@ describe('Prawn', function() {
       });
     });
 
-    describe('update list of pastLocation property with poop', function() {
-      // it('should update pastLocations array with its current location', function() {
-      //   var prawn = new Prawn({});
-      //   var world = new World(200, 200);
-      //   world.addPrawn(prawn);
-      //   prawn.x = 15;
-      //   prawn.y = 15;
-      //   prawn.width = 10;
-      //   prawn.height = 10;
-      //   prawn.poop();
-      //   assert.deepEqual(world.allPrawnLocations, [{x: 15, y: 15}, {x: 25, y: 15}, {x: 25, y: 25}, {x: 15, y: 25}]);
-      // });
+    // describe('update list of pastLocation property with poop', function() {
+    //   // it('should update pastLocations array with its current location', function() {
+    //   //   var prawn = new Prawn({});
+    //   //   var world = new World(200, 200);
+    //   //   world.addPrawn(prawn);
+    //   //   prawn.x = 15;
+    //   //   prawn.y = 15;
+    //   //   prawn.width = 10;
+    //   //   prawn.height = 10;
+    //   //   prawn.poop();
+    //   //   assert.deepEqual(world.allPrawnLocations, [{x: 15, y: 15}, {x: 25, y: 15}, {x: 25, y: 25}, {x: 15, y: 25}]);
+    //   // });
 
       it('should update add to pastLocations array each time the prawn moves', function() {
         var prawn = new Prawn({});
@@ -162,6 +161,4 @@ describe('Prawn', function() {
         prawn.moveUp();
         assert.equal(world.allPrawnLocations.length, 8);
       });
-    });
-
 });
