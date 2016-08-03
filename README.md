@@ -44,7 +44,16 @@ npm test
   
 Functions associated with initiating, rendering, and event listeners on the game are housed here.  Event listeners such as a change direction request will execute a function via the world prototype, which then executes the movement function on individual prawns, which are then rendered in the tick function in the world.
 
+## Tests can be found in the test folder and consist of 4 files:
+
+1. index.js: included for the bundler to combine other 3 test files
+2. world-test.js: contains tests associated with the creation and parameters around the world
+3. prawn-test.js: contains tests for the creation and movement of each prawn
+4. prawn-world-test: contains collision testing
+
 Tests are in place to ensure attributes of the world and the prawn, to test key functions (like those moving the prawns), and confirm basic collision testing is working.
+
+##Other files
 
 Basic reset files and styling is applied in the css folder.  The majority of styling is being applied as animations in canva, but headers and footers frame the canvas for buttons, scoreboard, and the difficulty dropdown.
 
@@ -52,6 +61,3 @@ Index.html contains basic HTML and script tags to the bundler.
 
 Images are in the images folder.  All rights are reserved on the Trawn Prawn image.
 
-
-
-Prawn.j
