@@ -4,6 +4,7 @@ const Prawn = require('../lib/prawn');
 
 const World = require('../lib/world');
 
+const Rectangle = require('../lib/rectangle')
 
 
 describe('Prawn', function() {
