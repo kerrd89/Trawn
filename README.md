@@ -1,5 +1,9 @@
 # Trawn
 
+App is available on gh-pages at [https://kerrd89.github.io/Trawn/](https://kerrd89.github.io/Trawn/).
+
+![](http://g.recordit.co/oOI8TrHVkQ.gif)
+
 To install the dependencies:
 
 ```
@@ -41,7 +45,7 @@ npm test
   * event listeners
   * Canva animations
   * requires both the world and prawn, allowing it access to both.
-  
+
 Functions associated with initiating, rendering, and event listeners on the game are housed here.  Event listeners such as a change direction request will execute a function via the world prototype, which then executes the movement function on individual prawns, which are then rendered in the tick function in the world.
 
 ## Tests can be found in the test folder and consist of 4 files:
@@ -60,4 +64,3 @@ Basic reset files and styling is applied in the css folder.  The majority of sty
 Index.html contains basic HTML and script tags to the bundler.
 
 Images are in the images folder.  All rights are reserved on the Trawn Prawn image.
-
